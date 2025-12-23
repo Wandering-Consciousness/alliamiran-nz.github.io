@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All I Am, I Ran — Kat's 2025 Great Walks</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --forest-deep: #1a2e1a;
+            --forest-mid: #2d4a2d;
+            --forest-light: #4a7c4a;
+            --fern: #5d8a5d;
+            --moss: #7ba37b;
+            --mist: #c5d5c5;
+            --cream: #f5f2eb;
+            --sunrise-orange: #e8956a;
+            --sunset-gold: #d4a574;
+            --moonrise: #f0c987;
+            --white-glow: rgba(255, 255, 255, 0.9);
+            --text-dark: #1a2e1a;
+            --text-light: #f5f2eb;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Instrument Sans', sans-serif;
+            background: var(--forest-deep);
+            color: var(--text-light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Topographic background pattern */
+        .topo-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.08;
+            z-index: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 800'%3E%3Cg fill='none' stroke='%234a7c4a' stroke-width='1'%3E%3Cellipse cx='400' cy='400' rx='350' ry='300'/%3E%3Cellipse cx='400' cy='400' rx='300' ry='250'/%3E%3Cellipse cx='400' cy='400' rx='250' ry='200'/%3E%3Cellipse cx='400' cy='400' rx='200' ry='150'/%3E%3Cellipse cx='400' cy='400' rx='150' ry='100'/%3E%3Cellipse cx='400' cy='400' rx='100' ry='60'/%3E%3Cellipse cx='400' cy='400' rx='50' ry='30'/%3E%3Cellipse cx='200' cy='200' rx='150' ry='120'/%3E%3Cellipse cx='200' cy='200' rx='100' ry='80'/%3E%3Cellipse cx='200' cy='200' rx='50' ry='40'/%3E%3Cellipse cx='600' cy='600' rx='180' ry='140'/%3E%3Cellipse cx='600' cy='600' rx='130' ry='100'/%3E%3Cellipse cx='600' cy='600' rx='80' ry='60'/%3E%3Cellipse cx='650' cy='200' rx='120' ry='100'/%3E%3Cellipse cx='650' cy='200' rx='70' ry='55'/%3E%3Cellipse cx='150' cy='600' rx='130' ry='110'/%3E%3Cellipse cx='150' cy='600' rx='80' ry='65'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: 800px 800px;
+        }
+
+        /* Audio control */
+        .audio-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--forest-mid);
+            border: 1px solid var(--fern);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .audio-control:hover {
+            background: var(--forest-light);
+            transform: scale(1.1);
+        }
+
+        .audio-control svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--cream);
+        }
+
+        .audio-control.muted svg .sound-wave {
+            display: none;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .hero-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.4) saturate(0.8);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                180deg,
+                rgba(26, 46, 26, 0.3) 0%,
+                rgba(26, 46, 26, 0.6) 50%,
+                rgba(26, 46, 26, 0.95) 100%
+            );
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            padding: 2rem;
+            max-width: 900px;
+        }
+
+        .hero-subtitle {
+            font-family: 'Instrument Sans', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--moss);
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.5s;
+        }
+
+        .hero-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 400;
+            color: var(--cream);
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.8s;
+        }
+
+        .haiku {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.3rem, 4vw, 2rem);
+            font-style: italic;
+            line-height: 2;
+            color: var(--moonrise);
+            margin-bottom: 3rem;
+        }
+
+        .haiku-line {
+            display: block;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .haiku-line:nth-child(1) { animation: fadeInUp 1s ease forwards 1.5s; }
+        .haiku-line:nth-child(2) { animation: fadeInUp 1s ease forwards 2s; }
+        .haiku-line:nth-child(3) { animation: fadeInUp 1s ease forwards 2.5s; }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 3.5s, bounce 2s ease-in-out infinite 4s;
+        }
+
+        .scroll-indicator svg {
+            width: 30px;
+            height: 30px;
+            stroke: var(--moss);
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 8rem 2rem;
+            background: linear-gradient(180deg, var(--forest-deep) 0%, var(--forest-mid) 100%);
+            position: relative;
+            z-index: 1;
+        }
+
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: rgba(45, 74, 45, 0.3);
+            border: 1px solid rgba(125, 163, 125, 0.2);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .stat-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--sunrise-orange), var(--moonrise));
+        }
+
+        .stat-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4rem;
+            font-weight: 600;
+            color: var(--moonrise);
+            display: block;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-unit {
+            font-size: 1.5rem;
+            color: var(--sunset-gold);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--moss);
+        }
+
+        .stat-card.pulse .stat-number {
+            animation: pulse 0.5s ease;
+        }
+
+        /* Map Section */
+        .map-section {
+            padding: 6rem 2rem;
+            background: var(--forest-mid);
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            text-align: center;
+            color: var(--cream);
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--moss);
+            margin-bottom: 4rem;
+            font-size: 1.1rem;
+        }
+
+        .map-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .nz-map {
+            width: 100%;
+            height: auto;
+        }
+
+        .map-pin {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .map-pin::before {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: var(--sunrise-orange);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 20px var(--sunrise-orange);
+            animation: pinPulse 2s ease-in-out infinite;
+        }
+
+        .map-pin::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--moonrise);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.5;
+        }
+
+        .map-pin.completed::before {
+            background: var(--fern);
+            box-shadow: 0 0 20px var(--fern);
+        }
+
+        .map-pin.upcoming::before {
+            background: var(--moonrise);
+            box-shadow: 0 0 20px var(--moonrise);
+            animation: pinPulse 1s ease-in-out infinite;
+        }
+
+        .pin-tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-10px);
+            background: var(--forest-deep);
+            border: 1px solid var(--fern);
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            z-index: 20;
+        }
+
+        .map-pin:hover .pin-tooltip {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-5px);
+        }
+
+        .pin-tooltip strong {
+            display: block;
+            color: var(--moonrise);
+            font-size: 0.9rem;
+        }
+
+        .pin-tooltip span {
+            color: var(--moss);
+            font-size: 0.8rem;
+        }
+
+        /* Track List */
+        .track-list {
+            max-width: 800px;
+            margin: 4rem auto 0;
+            display: grid;
+            gap: 1rem;
+        }
+
+        .track-item {
+            display: grid;
+            grid-template-columns: 1fr auto auto;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.5rem;
+            background: rgba(26, 46, 26, 0.5);
+            border-radius: 6px;
+            border-left: 3px solid var(--fern);
+            transition: all 0.3s ease;
+        }
+
+        .track-item:hover {
+            background: rgba(26, 46, 26, 0.8);
+            border-left-color: var(--moonrise);
+        }
+
+        .track-item.upcoming {
+            border-left-color: var(--sunrise-orange);
+            background: rgba(232, 149, 106, 0.1);
+        }
+
+        .track-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            color: var(--cream);
+        }
+
+        .track-name a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .track-name a:hover {
+            color: var(--moonrise);
+        }
+
+        .track-distance {
+            color: var(--sunset-gold);
+            font-weight: 500;
+        }
+
+        .track-status {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .track-status.completed {
+            background: var(--fern);
+            color: var(--cream);
+        }
+
+        .track-status.upcoming {
+            background: var(--sunrise-orange);
+            color: var(--forest-deep);
+        }
+
+        /* One More Section */
+        .one-more {
+            padding: 8rem 2rem;
+            background: linear-gradient(180deg, var(--forest-mid) 0%, var(--forest-deep) 100%);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .one-more-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: var(--sunrise-orange);
+            color: var(--forest-deep);
+            font-size: 0.8rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            border-radius: 30px;
+            margin-bottom: 2rem;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        .one-more h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 6vw, 4rem);
+            color: var(--cream);
+            margin-bottom: 1rem;
+        }
+
+        .one-more p {
+            color: var(--moss);
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .remaining-km {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 5rem;
+            color: var(--moonrise);
+            font-weight: 600;
+        }
+
+        .remaining-km span {
+            font-size: 2rem;
+            color: var(--sunset-gold);
+        }
+
+        /* Gallery Section */
+        .gallery {
+            padding: 6rem 2rem;
+            background: var(--forest-deep);
+            position: relative;
+            z-index: 1;
+        }
+
+        .gallery-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            columns: 4;
+            column-gap: 1rem;
+        }
+
+        @media (max-width: 1200px) { .gallery-grid { columns: 3; } }
+        @media (max-width: 800px) { .gallery-grid { columns: 2; } }
+        @media (max-width: 500px) { .gallery-grid { columns: 1; } }
+
+        .gallery-item {
+            break-inside: avoid;
+            margin-bottom: 1rem;
+            border-radius: 6px;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+        }
+
+        .gallery-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-item::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 60%, rgba(26, 46, 26, 0.8) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover::after {
+            opacity: 1;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 90vw;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 4px;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--cream);
+            font-size: 2rem;
+            cursor: pointer;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+
+        .lightbox-close:hover {
+            transform: rotate(90deg);
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(45, 74, 45, 0.8);
+            border: none;
+            color: var(--cream);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .lightbox-nav:hover {
+            background: var(--fern);
+        }
+
+        .lightbox-prev { left: 20px; }
+        .lightbox-next { right: 20px; }
+
+        /* Gifts Section */
+        .gifts {
+            padding: 8rem 2rem;
+            background: linear-gradient(180deg, var(--forest-deep) 0%, var(--forest-mid) 50%, var(--forest-deep) 100%);
+            position: relative;
+            z-index: 1;
+        }
+
+        .gifts-container {
+            max-width: 800px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .gift-card {
+            background: rgba(45, 74, 45, 0.3);
+            border: 1px solid rgba(125, 163, 125, 0.3);
+            border-radius: 12px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gift-card::before {
+            content: '🎁';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 6rem;
+            opacity: 0.1;
+        }
+
+        .gift-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--moonrise);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .gift-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .gift-card h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            color: var(--cream);
+            margin-bottom: 0.5rem;
+        }
+
+        .gift-card p {
+            color: var(--moss);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .gift-link {
+            display: inline-block;
+            padding: 0.75rem 2rem;
+            background: linear-gradient(135deg, var(--sunrise-orange), var(--sunset-gold));
+            color: var(--forest-deep);
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .gift-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(232, 149, 106, 0.4);
+        }
+
+        /* Message Section */
+        .message {
+            padding: 6rem 2rem;
+            background: var(--forest-mid);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .message-content {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 3rem;
+            background: rgba(26, 46, 26, 0.5);
+            border-radius: 12px;
+            border: 1px solid rgba(125, 163, 125, 0.2);
+        }
+
+        .message-content p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-style: italic;
+            color: var(--cream);
+            line-height: 1.8;
+        }
+
+        .message-signature {
+            margin-top: 2rem;
+            color: var(--sunset-gold);
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 2rem;
+            background: var(--forest-deep);
+            text-align: center;
+            border-top: 1px solid rgba(125, 163, 125, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-haiku {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            font-style: italic;
+            color: var(--moss);
+            line-height: 2;
+            margin-bottom: 2rem;
+        }
+
+        .footer-year {
+            color: rgba(125, 163, 125, 0.5);
+            font-size: 0.85rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes pinPulse {
+            0%, 100% { 
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+            50% { 
+                transform: translate(-50%, -50%) scale(1.3);
+                opacity: 0.7;
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(232, 149, 106, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(232, 149, 106, 0.8); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content {
+                padding: 1.5rem;
+            }
+
+            .stats {
+                padding: 4rem 1rem;
+            }
+
+            .stat-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .stat-number {
+                font-size: 3rem;
+            }
+
+            .track-item {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+                text-align: center;
+            }
+
+            .gifts-container {
+                grid-template-columns: 1fr;
+            }
+
+            .lightbox-nav {
+                width: 40px;
+                height: 40px;
+            }
+
+            .lightbox-prev { left: 10px; }
+            .lightbox-next { right: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="topo-bg"></div>
+
+    <!-- Audio Control -->
+    <button class="audio-control muted" id="audioControl" aria-label="Toggle sound">
+        <svg viewBox="0 0 24 24">
+            <path d="M3 9v6h4l5 5V4L7 9H3z"/>
+            <path class="sound-wave" d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+            <path class="sound-wave" d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+        </svg>
+    </button>
+    <audio id="ambientAudio" loop>
+        <source src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Tui_song.ogg" type="audio/ogg">
+    </audio>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg">
+            <img src="photos/483911148_18161751889339526_2092607066702141725_n.jpg" alt="Kat on the trails" loading="eager">
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <p class="hero-subtitle">2025 Great Walks</p>
+            <h1 class="hero-title">All I Am, I Ran</h1>
+            <div class="haiku">
+                <span class="haiku-line">Fern, moon, fractured bone—</span>
+                <span class="haiku-line">through mist and pain, I found this:</span>
+                <span class="haiku-line">all I am, I ran.</span>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
+                <path d="M12 5v14M5 12l7 7 7-7"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="stats-container">
+            <div class="stat-card">
+                <span class="stat-number" data-target="521"><span class="stat-unit">km</span></span>
+                <span class="stat-label">Total Distance</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" data-target="10"></span>
+                <span class="stat-label">Great Walks</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" data-target="9"></span>
+                <span class="stat-label">Completed</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" data-target="1"></span>
+                <span class="stat-label">To Go</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="map-section">
+        <h2 class="section-title">The Journey</h2>
+        <p class="section-subtitle">10 Great Walks across Aotearoa New Zealand</p>
+        
+        <div class="map-container">
+            <svg class="nz-map" viewBox="0 0 400 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Topographic-style NZ Map -->
+                <defs>
+                    <linearGradient id="landGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#2d4a2d"/>
+                        <stop offset="100%" style="stop-color:#1a2e1a"/>
+                    </linearGradient>
+                    <filter id="glow">
+                        <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                        <feMerge>
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                </defs>
+                
+                <!-- North Island -->
+                <path d="M220 50 Q280 80 290 120 Q295 160 280 200 Q270 230 250 260 Q235 280 220 290 Q200 300 180 295 Q160 290 150 270 Q140 250 145 220 Q150 190 160 160 Q165 130 180 100 Q195 70 220 50" 
+                      fill="url(#landGradient)" stroke="#4a7c4a" stroke-width="1"/>
+                
+                <!-- Topo lines - North Island -->
+                <path d="M220 70 Q260 90 270 130 Q275 160 260 200 Q250 230 235 255" 
+                      fill="none" stroke="#4a7c4a" stroke-width="0.5" opacity="0.5"/>
+                <path d="M200 80 Q240 100 250 140 Q255 170 240 210" 
+                      fill="none" stroke="#4a7c4a" stroke-width="0.5" opacity="0.4"/>
+                
+                <!-- South Island -->
+                <path d="M180 320 Q200 310 230 315 Q260 320 280 340 Q300 360 310 400 Q315 440 305 480 Q290 520 260 550 Q230 570 195 565 Q160 560 140 530 Q125 500 130 460 Q135 420 150 380 Q165 340 180 320" 
+                      fill="url(#landGradient)" stroke="#4a7c4a" stroke-width="1"/>
+                
+                <!-- Topo lines - South Island -->
+                <path d="M200 330 Q230 335 255 355 Q280 375 290 410 Q295 450 280 490 Q260 530 230 550" 
+                      fill="none" stroke="#4a7c4a" stroke-width="0.5" opacity="0.5"/>
+                <path d="M190 345 Q220 350 240 370 Q265 390 275 425 Q280 460 265 500" 
+                      fill="none" stroke="#4a7c4a" stroke-width="0.5" opacity="0.4"/>
+                <path d="M180 360 Q210 365 230 385 Q250 405 258 440" 
+                      fill="none" stroke="#4a7c4a" stroke-width="0.5" opacity="0.3"/>
+                
+                <!-- Stewart Island -->
+                <path d="M175 580 Q195 575 205 585 Q210 595 200 605 Q185 610 175 600 Q170 590 175 580" 
+                      fill="url(#landGradient)" stroke="#4a7c4a" stroke-width="1"/>
+            </svg>
+
+            <!-- Map Pins -->
+            <div class="map-pin completed" style="left: 58%; top: 38%;">
+                <div class="pin-tooltip"><strong>Tongariro</strong><span>43 km</span></div>
+            </div>
+            <div class="map-pin completed" style="left: 68%; top: 42%;">
+                <div class="pin-tooltip"><strong>Lake Waikaremoana</strong><span>46 km</span></div>
+            </div>
+            <div class="map-pin completed" style="left: 52%; top: 54%;">
+                <div class="pin-tooltip"><strong>Abel Tasman</strong><span>60 km</span></div>
+            </div>
+            <div class="map-pin completed" style="left: 45%; top: 58%;">
+                <div class="pin-tooltip"><strong>Heaphy</strong><span>78.4 km</span></div>
+            </div>
+            <div class="map-pin completed" style="left: 42%; top: 68%;">
+                <div class="pin-tooltip"><strong>Paparoa</strong><span>55 km</span></div>
+            </div>
+            <div class="map-pin completed" style="left: 48%; top: 82%;">
+                <div class="pin-tooltip"><strong>Routeburn</strong><span>32 km</span></div>
+            </div>
+            <div class="map-pin completed" style="left: 52%; top: 85%;">
+                <div class="pin-tooltip"><strong>Milford</strong><span>53.5 km</span></div>
+            </div>
+            <div class="map-pin completed" style="left: 55%; top: 88%;">
+                <div class="pin-tooltip"><strong>Kepler</strong><span>60 km</span></div>
+            </div>
+            <div class="map-pin upcoming" style="left: 58%; top: 91%;">
+                <div class="pin-tooltip"><strong>Hump Ridge</strong><span>61 km — NEXT!</span></div>
+            </div>
+            <div class="map-pin completed" style="left: 48%; top: 97%;">
+                <div class="pin-tooltip"><strong>Rakiura</strong><span>32 km</span></div>
+            </div>
+        </div>
+
+        <!-- Track List -->
+        <div class="track-list">
+            <div class="track-item">
+                <span class="track-name"><a href="poems/routeburn.html">Routeburn Track</a></span>
+                <span class="track-distance">32 km</span>
+                <span class="track-status completed">✓ Completed</span>
+            </div>
+            <div class="track-item">
+                <span class="track-name"><a href="poems/rakiura.html">Rakiura Track</a></span>
+                <span class="track-distance">32 km</span>
+                <span class="track-status completed">✓ Completed</span>
+            </div>
+            <div class="track-item">
+                <span class="track-name"><a href="poems/tongariro.html">Tongariro Northern Circuit</a></span>
+                <span class="track-distance">43 km</span>
+                <span class="track-status completed">✓ Completed</span>
+            </div>
+            <div class="track-item">
+                <span class="track-name"><a href="poems/abel-tasman.html">Abel Tasman Coast Track</a></span>
+                <span class="track-distance">60 km</span>
+                <span class="track-status completed">✓ Completed</span>
+            </div>
+            <div class="track-item">
+                <span class="track-name"><a href="poems/waikaremoana.html">Lake Waikaremoana</a></span>
+                <span class="track-distance">46 km</span>
+                <span class="track-status completed">✓ Completed</span>
+            </div>
+            <div class="track-item">
+                <span class="track-name"><a href="poems/heaphy.html">Heaphy Track</a></span>
+                <span class="track-distance">78.4 km</span>
+                <span class="track-status completed">✓ Completed</span>
+            </div>
+            <div class="track-item">
+                <span class="track-name"><a href="poems/paparoa.html">Paparoa Track</a></span>
+                <span class="track-distance">55 km</span>
+                <span class="track-status completed">✓ Completed</span>
+            </div>
+            <div class="track-item">
+                <span class="track-name"><a href="poems/milford.html">Milford Track</a></span>
+                <span class="track-distance">53.5 km</span>
+                <span class="track-status completed">✓ Completed</span>
+            </div>
+            <div class="track-item">
+                <span class="track-name"><a href="poems/kepler.html">Kepler Track</a></span>
+                <span class="track-distance">60 km</span>
+                <span class="track-status completed">✓ Completed</span>
+            </div>
+            <div class="track-item upcoming">
+                <span class="track-name">Hump Ridge Track</span>
+                <span class="track-distance">61 km</span>
+                <span class="track-status upcoming">Coming Up!</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- One More Section -->
+    <section class="one-more">
+        <span class="one-more-badge">The Final Chapter</span>
+        <h2>One More To Go</h2>
+        <p>Hump Ridge Track awaits after Christmas</p>
+        <div class="remaining-km">61<span>km</span></div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery">
+        <h2 class="section-title">The Memories</h2>
+        <p class="section-subtitle">95 moments from an incredible year</p>
+        <div class="gallery-grid" id="galleryGrid">
+            <!-- Photos will be inserted by JavaScript -->
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" aria-label="Close">&times;</button>
+        <button class="lightbox-nav lightbox-prev" aria-label="Previous">‹</button>
+        <img src="" alt="Gallery photo">
+        <button class="lightbox-nav lightbox-next" aria-label="Next">›</button>
+    </div>
+
+    <!-- Gifts Section -->
+    <section class="gifts">
+        <h2 class="section-title">A Little Something Extra</h2>
+        <p class="section-subtitle">To celebrate this incredible achievement</p>
+        <div class="gifts-container">
+            <div class="gift-card">
+                <div class="gift-icon">🏃‍♀️</div>
+                <h3>Strava Art</h3>
+                <p>A special route spelling out the words that defined your year: ALL I AM I RAN</p>
+                <a href="#" class="gift-link" id="stravaLink">View the Route →</a>
+            </div>
+            <div class="gift-card">
+                <div class="gift-icon">📚</div>
+                <h3>Wild by Cheryl Strayed</h3>
+                <p>A story of another woman who found herself on the trail. For your next adventure.</p>
+                <a href="#" class="gift-link" id="bookLink">Get the Book →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Personal Message -->
+    <section class="message">
+        <div class="message-content">
+            <p>Merry Xmas sis! Awesome effort on the 2025 Great Walks and will join you on the 2026 Whanganui Great Kayak!</p>
+            <div class="message-signature">— With love ❤️</div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-haiku">
+            Fern, moon, fractured bone—<br>
+            through mist and pain, I found this:<br>
+            all I am, I ran.
+        </div>
+        <p class="footer-year">Kat's Great Walks 2025</p>
+    </footer>
+
+    <script>
+        // Photo filenames
+        const photos = [
+            "476499570_18158675953339526_5836040147480391696_n.jpg",
+            "476499740_18158675896339526_1781293804063901959_n.jpg",
+            "476505429_18158675926339526_5666410231610048836_n.jpg",
+            "476506087_18158675797339526_5307805373984986070_n.jpg",
+            "476859903_18158675875339526_1891289324497680109_n.jpg",
+            "476897408_18158675887339526_3659511677848132175_n.jpg",
+            "476903899_18158675905339526_3352592510984430523_n.jpg",
+            "476984013_18158675848339526_8008727344479854406_n.jpg",
+            "477528791_18158675839339526_8435950370836785699_n.jpg",
+            "477671778_18158675944339526_5635357408935155955_n.jpg",
+            "479170817_18158675866339526_6144001905890927593_n.jpg",
+            "479176524_18158675830339526_1115206594283859915_n.jpg",
+            "483645374_18161751802339526_4826307135374199690_n.jpg",
+            "483696380_18161751850339526_866620303948430372_n.jpg",
+            "483786813_18161751841339526_3417382707107676499_n.jpg",
+            "483842290_18161751793339526_2669967639632831958_n.jpg",
+            "483914671_18161751823339526_5664395078184946690_n.jpg",
+            "483919683_18161751880339526_7287566565757678268_n.jpg",
+            "483921256_18161751811339526_6227241625875547589_n.jpg",
+            "483931864_18161751910339526_3467392595601689048_n.jpg",
+            "483948904_18161751778339526_2686399491975181517_n.jpg",
+            "484162424_18161751868339526_8696657005962984697_n.jpg",
+            "484165809_18161751832339526_7613818251106015274_n.jpg",
+            "484168007_18161751952339526_3792330443778945686_n.jpg",
+            "484284443_18161751925339526_6515098185688809232_n.jpg",
+            "484305706_18161751940339526_5688903859956018851_n.jpg",
+            "484360350_18161751901339526_626868660947367225_n.jpg",
+            "484447949_18161751859339526_1516575367322200475_n.jpg",
+            "491349925_18165560563339526_5070837383617778969_n.jpg",
+            "491461363_18165560626339526_1715321865289298807_n.jpg",
+            "491462020_18165560530339526_363772411986387935_n.jpg",
+            "491463233_18165560635339526_4434762687844005165_n.jpg",
+            "491465773_18165560554339526_4114742529623590461_n.jpg",
+            "491470930_18165560518339526_715342821871406691_n.jpg",
+            "491493346_18165560665339526_2471599135918040384_n.jpg",
+            "491493583_18165560500339526_2784759430892492047_n.jpg",
+            "491496596_18165560608339526_5511216797436355941_n.jpg",
+            "491498841_18165560572339526_3568592875178148972_n.jpg",
+            "491498883_18165560656339526_7548844386173449337_n.jpg",
+            "491504755_18165560674339526_1964262344747611804_n.jpg",
+            "491535965_18165560692339526_4561112275137691865_n.jpg",
+            "491581770_18165560545339526_4211377840770416428_n.jpg",
+            "491660300_18165560587339526_9069365524414843081_n.jpg",
+            "491668732_18165560644339526_5261130119995808733_n.jpg",
+            "491668734_18165560617339526_6558407114812576804_n.jpg",
+            "491895934_18165560599339526_2501973661161526355_n.jpg",
+            "522930026_18174304030339526_544567717690421749_n.jpg",
+            "576131125_18189609871339526_2419421935407733965_n.jpg",
+            "576536906_18187410712339526_4033555784980701175_n.jpg",
+            "580095758_18187410838339526_3911226102057520909_n.jpg",
+            "580561162_18187410685339526_6144907667135157668_n.jpg",
+            "580572512_18187410829339526_8566985162740238161_n.jpg",
+            "580634964_18187410730339526_7378315526020103713_n.jpg",
+            "580634975_18187410676339526_1363031751844829603_n.jpg",
+            "581560943_18187410694339526_5147523694169199127_n.jpg",
+            "581646674_18187410703339526_1719290755008942631_n.jpg",
+            "581774892_18187410658339526_4132174459539752258_n.jpg",
+            "581786337_18187410667339526_7303756510640946076_n.jpg",
+            "582018199_18187410721339526_3909325043887757009_n.jpg",
+            "582066876_18187410784339526_7057426082903459925_n.jpg",
+            "582080540_18187410796339526_4634967199897214852_n.jpg",
+            "582082229_18187410772339526_9076563499979207697_n.jpg",
+            "582593673_18187410847339526_7922862841713917646_n.jpg",
+            "583099176_18187410751339526_2206922264363039693_n.jpg",
+            "583223693_18187410805339526_4522251843456500364_n.jpg",
+            "583273140_18187410763339526_7524953417135484242_n.jpg",
+            "587810294_18189609841339526_639699594921606213_n.jpg",
+            "587946659_18189609928339526_6337188768095275514_n.jpg",
+            "587990620_18189609850339526_2387697413584046480_n.jpg",
+            "588641812_18189609940339526_5276320424420341013_n.jpg",
+            "588680348_18189609889339526_2528696750219285595_n.jpg",
+            "588901764_18189609859339526_4442542905226102304_n.jpg",
+            "589156267_18189609958339526_1083054326700070526_n.jpg",
+            "589387370_18189609910339526_2631629724975114056_n.jpg",
+            "589803093_18189609919339526_3488907626158100111_n.jpg",
+            "589915066_18189609898339526_2690303125947872259_n.jpg",
+            "590364944_18190705120339526_6434621898822155519_n.jpg",
+            "590373060_18190705189339526_2554965429276754855_n.jpg",
+            "590384399_18189609949339526_437152661089208765_n.jpg",
+            "599959131_18190705258339526_8803257644359950585_n.jpg",
+            "599979251_18190705306339526_2807276248947108773_n.jpg",
+            "599989794_18190705177339526_1779596269381723897_n.jpg",
+            "600047052_18190705129339526_1035974242805052804_n.jpg",
+            "600879923_18190705285339526_8019113873372854298_n.jpg",
+            "600879928_18190705111339526_3267176892843073124_n.jpg",
+            "600928748_18190705045339526_8990745793090917287_n.jpg",
+            "601332609_18190705090339526_3507267356689627734_n.jpg",
+            "601477663_18190705162339526_4209273528886300814_n.jpg",
+            "602193819_18190705150339526_1395751387757561492_n.jpg",
+            "602277813_18190705204339526_5463306780905875593_n.jpg",
+            "603137356_18190705222339526_1890536213074980457_n.jpg",
+            "603146189_18190705102339526_7601294758969510936_n.jpg",
+            "603376056_18190705138339526_235774792187175423_n.jpg"
+        ];
+
+        // Shuffle photos for variety
+        const shuffledPhotos = photos.sort(() => Math.random() - 0.5);
+
+        // Populate gallery
+        const galleryGrid = document.getElementById('galleryGrid');
+        shuffledPhotos.forEach((photo, index) => {
+            const item = document.createElement('div');
+            item.className = 'gallery-item';
+            item.innerHTML = `<img src="photos/${photo}" alt="Great Walks memory ${index + 1}" loading="lazy">`;
+            item.dataset.index = index;
+            galleryGrid.appendChild(item);
+        });
+
+        // Lightbox functionality
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = lightbox.querySelector('img');
+        let currentIndex = 0;
+
+        galleryGrid.addEventListener('click', (e) => {
+            const item = e.target.closest('.gallery-item');
+            if (item) {
+                currentIndex = parseInt(item.dataset.index);
+                lightboxImg.src = `photos/${shuffledPhotos[currentIndex]}`;
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        });
+
+        lightbox.querySelector('.lightbox-close').addEventListener('click', () => {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        lightbox.querySelector('.lightbox-prev').addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + shuffledPhotos.length) % shuffledPhotos.length;
+            lightboxImg.src = `photos/${shuffledPhotos[currentIndex]}`;
+        });
+
+        lightbox.querySelector('.lightbox-next').addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % shuffledPhotos.length;
+            lightboxImg.src = `photos/${shuffledPhotos[currentIndex]}`;
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (!lightbox.classList.contains('active')) return;
+            if (e.key === 'Escape') lightbox.querySelector('.lightbox-close').click();
+            if (e.key === 'ArrowLeft') lightbox.querySelector('.lightbox-prev').click();
+            if (e.key === 'ArrowRight') lightbox.querySelector('.lightbox-next').click();
+        });
+
+        // Click outside to close
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 50);
+                }
+            });
+        }, observerOptions);
+
+        // Observe stat cards
+        document.querySelectorAll('.stat-card').forEach(card => observer.observe(card));
+
+        // Observe gallery items
+        document.querySelectorAll('.gallery-item').forEach(item => observer.observe(item));
+
+        // Animated counters
+        const animateCounter = (element, target) => {
+            let current = 0;
+            const increment = target / 50;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                const unit = element.querySelector('.stat-unit');
+                if (unit) {
+                    element.innerHTML = Math.floor(current) + '<span class="stat-unit">km</span>';
+                } else {
+                    element.textContent = Math.floor(current);
+                }
+            }, 30);
+        };
+
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const numberEl = entry.target.querySelector('.stat-number');
+                    const target = parseInt(numberEl.dataset.target);
+                    animateCounter(numberEl, target);
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.stat-card').forEach(card => statsObserver.observe(card));
+
+        // Audio control
+        const audioControl = document.getElementById('audioControl');
+        const audio = document.getElementById('ambientAudio');
+        audio.volume = 0.3;
+
+        audioControl.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+                audioControl.classList.remove('muted');
+            } else {
+                audio.pause();
+                audioControl.classList.add('muted');
+            }
+        });
+
+        // Smooth reveal on scroll
+        const revealOnScroll = () => {
+            const reveals = document.querySelectorAll('.stat-card, .gallery-item');
+            reveals.forEach(el => {
+                const windowHeight = window.innerHeight;
+                const revealTop = el.getBoundingClientRect().top;
+                const revealPoint = 150;
+                if (revealTop < windowHeight - revealPoint) {
+                    el.classList.add('visible');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll();
+    </script>
+</body>
+</html>

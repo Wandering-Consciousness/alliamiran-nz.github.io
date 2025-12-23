@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paparoa Track — Kat's 2025 Great Walks</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --forest-deep: #1a2e1a;
+            --forest-mid: #2d4a2d;
+            --fern: #5d8a5d;
+            --moss: #7ba37b;
+            --cream: #f5f2eb;
+            --sunset-gold: #d4a574;
+            --moonrise: #f0c987;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Instrument Sans', sans-serif;
+            background: var(--forest-deep);
+            color: var(--cream);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .back-link {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            color: var(--moss);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+        .back-link:hover { color: var(--moonrise); }
+        .poem-container {
+            max-width: 700px;
+            text-align: center;
+        }
+        .track-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: var(--forest-mid);
+            border: 1px solid var(--fern);
+            border-radius: 30px;
+            font-size: 0.8rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--moss);
+            margin-bottom: 1rem;
+        }
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            font-weight: 400;
+            color: var(--cream);
+            margin-bottom: 0.5rem;
+        }
+        .track-info {
+            color: var(--sunset-gold);
+            margin-bottom: 3rem;
+        }
+        .note {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            font-style: italic;
+            color: var(--moss);
+        }
+    </style>
+</head>
+<body>
+    <a href="../index.html" class="back-link">← Back to Journey</a>
+    <div class="poem-container">
+        <span class="track-badge">September 2025</span>
+        <h1>Paparoa Track</h1>
+        <p class="track-info">55 km · Paparoa Range, West Coast South Island</p>
+        <p class="note">New Zealand's newest Great Walk.<br>Through limestone karst and ancient rainforest.</p>
+    </div>
+</body>
+</html>
