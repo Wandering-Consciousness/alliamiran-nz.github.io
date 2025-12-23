@@ -290,93 +290,66 @@
         }
 
         .map-container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             position: relative;
         }
 
-        .nz-map {
+        #google-map {
             width: 100%;
-            height: auto;
+            height: 550px;
+            border-radius: 12px;
+            border: 2px solid var(--fern);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
         }
 
-        .map-pin {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            transform: translate(-50%, -50%);
-            cursor: pointer;
-            z-index: 10;
+        /* Custom info window styling */
+        .gm-style .gm-style-iw-c {
+            background: var(--forest-deep) !important;
+            border: 1px solid var(--fern) !important;
+            border-radius: 8px !important;
+            padding: 0 !important;
         }
 
-        .map-pin::before {
-            content: '';
-            position: absolute;
-            width: 12px;
-            height: 12px;
-            background: var(--sunrise-orange);
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            box-shadow: 0 0 20px var(--sunrise-orange);
-            animation: pinPulse 2s ease-in-out infinite;
+        .gm-style .gm-style-iw-d {
+            overflow: hidden !important;
         }
 
-        .map-pin::after {
-            content: '';
-            position: absolute;
-            width: 24px;
-            height: 24px;
-            border: 2px solid var(--moonrise);
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            opacity: 0.5;
+        .gm-style .gm-style-iw-tc::after {
+            background: var(--forest-deep) !important;
         }
 
-        .map-pin.completed::before {
-            background: var(--fern);
-            box-shadow: 0 0 20px var(--fern);
+        .gm-style-iw button[aria-label="Close"] {
+            display: none !important;
         }
 
-        .map-pin.upcoming::before {
-            background: var(--moonrise);
-            box-shadow: 0 0 20px var(--moonrise);
-            animation: pinPulse 1s ease-in-out infinite;
+        .info-window {
+            padding: 12px 16px;
+            font-family: 'Instrument Sans', sans-serif;
         }
 
-        .pin-tooltip {
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%) translateY(-10px);
-            background: var(--forest-deep);
-            border: 1px solid var(--fern);
-            padding: 0.75rem 1rem;
-            border-radius: 6px;
-            white-space: nowrap;
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.3s ease;
-            z-index: 20;
-        }
-
-        .map-pin:hover .pin-tooltip {
-            opacity: 1;
-            transform: translateX(-50%) translateY(-5px);
-        }
-
-        .pin-tooltip strong {
-            display: block;
+        .info-window-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
             color: var(--moonrise);
-            font-size: 0.9rem;
+            margin-bottom: 4px;
         }
 
-        .pin-tooltip span {
+        .info-window-distance {
+            color: var(--sunset-gold);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .info-window-status {
             color: var(--moss);
             font-size: 0.8rem;
+            margin-top: 4px;
+        }
+
+        .info-window-status.upcoming {
+            color: var(--sunrise-orange);
+            font-weight: 600;
         }
 
         /* Track List */
@@ -901,80 +874,7 @@
         <p class="section-subtitle">10 Great Walks across Aotearoa New Zealand</p>
         
         <div class="map-container">
-            <svg class="nz-map" viewBox="0 0 400 600" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- Topographic-style NZ Map -->
-                <defs>
-                    <linearGradient id="landGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style="stop-color:#2d4a2d"/>
-                        <stop offset="100%" style="stop-color:#1a2e1a"/>
-                    </linearGradient>
-                    <filter id="glow">
-                        <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
-                        <feMerge>
-                            <feMergeNode in="coloredBlur"/>
-                            <feMergeNode in="SourceGraphic"/>
-                        </feMerge>
-                    </filter>
-                </defs>
-                
-                <!-- North Island -->
-                <path d="M220 50 Q280 80 290 120 Q295 160 280 200 Q270 230 250 260 Q235 280 220 290 Q200 300 180 295 Q160 290 150 270 Q140 250 145 220 Q150 190 160 160 Q165 130 180 100 Q195 70 220 50" 
-                      fill="url(#landGradient)" stroke="#4a7c4a" stroke-width="1"/>
-                
-                <!-- Topo lines - North Island -->
-                <path d="M220 70 Q260 90 270 130 Q275 160 260 200 Q250 230 235 255" 
-                      fill="none" stroke="#4a7c4a" stroke-width="0.5" opacity="0.5"/>
-                <path d="M200 80 Q240 100 250 140 Q255 170 240 210" 
-                      fill="none" stroke="#4a7c4a" stroke-width="0.5" opacity="0.4"/>
-                
-                <!-- South Island -->
-                <path d="M180 320 Q200 310 230 315 Q260 320 280 340 Q300 360 310 400 Q315 440 305 480 Q290 520 260 550 Q230 570 195 565 Q160 560 140 530 Q125 500 130 460 Q135 420 150 380 Q165 340 180 320" 
-                      fill="url(#landGradient)" stroke="#4a7c4a" stroke-width="1"/>
-                
-                <!-- Topo lines - South Island -->
-                <path d="M200 330 Q230 335 255 355 Q280 375 290 410 Q295 450 280 490 Q260 530 230 550" 
-                      fill="none" stroke="#4a7c4a" stroke-width="0.5" opacity="0.5"/>
-                <path d="M190 345 Q220 350 240 370 Q265 390 275 425 Q280 460 265 500" 
-                      fill="none" stroke="#4a7c4a" stroke-width="0.5" opacity="0.4"/>
-                <path d="M180 360 Q210 365 230 385 Q250 405 258 440" 
-                      fill="none" stroke="#4a7c4a" stroke-width="0.5" opacity="0.3"/>
-                
-                <!-- Stewart Island -->
-                <path d="M175 580 Q195 575 205 585 Q210 595 200 605 Q185 610 175 600 Q170 590 175 580" 
-                      fill="url(#landGradient)" stroke="#4a7c4a" stroke-width="1"/>
-            </svg>
-
-            <!-- Map Pins -->
-            <div class="map-pin completed" style="left: 58%; top: 38%;">
-                <div class="pin-tooltip"><strong>Tongariro</strong><span>43 km</span></div>
-            </div>
-            <div class="map-pin completed" style="left: 68%; top: 42%;">
-                <div class="pin-tooltip"><strong>Lake Waikaremoana</strong><span>46 km</span></div>
-            </div>
-            <div class="map-pin completed" style="left: 52%; top: 54%;">
-                <div class="pin-tooltip"><strong>Abel Tasman</strong><span>60 km</span></div>
-            </div>
-            <div class="map-pin completed" style="left: 45%; top: 58%;">
-                <div class="pin-tooltip"><strong>Heaphy</strong><span>78.4 km</span></div>
-            </div>
-            <div class="map-pin completed" style="left: 42%; top: 68%;">
-                <div class="pin-tooltip"><strong>Paparoa</strong><span>55 km</span></div>
-            </div>
-            <div class="map-pin completed" style="left: 48%; top: 82%;">
-                <div class="pin-tooltip"><strong>Routeburn</strong><span>32 km</span></div>
-            </div>
-            <div class="map-pin completed" style="left: 52%; top: 85%;">
-                <div class="pin-tooltip"><strong>Milford</strong><span>53.5 km</span></div>
-            </div>
-            <div class="map-pin completed" style="left: 55%; top: 88%;">
-                <div class="pin-tooltip"><strong>Kepler</strong><span>60 km</span></div>
-            </div>
-            <div class="map-pin upcoming" style="left: 58%; top: 91%;">
-                <div class="pin-tooltip"><strong>Hump Ridge</strong><span>61 km — NEXT!</span></div>
-            </div>
-            <div class="map-pin completed" style="left: 48%; top: 97%;">
-                <div class="pin-tooltip"><strong>Rakiura</strong><span>32 km</span></div>
-            </div>
+            <div id="google-map"></div>
         </div>
 
         <!-- Track List -->
@@ -1336,6 +1236,311 @@
 
         window.addEventListener('scroll', revealOnScroll);
         revealOnScroll();
+
+        // Google Maps initialization
+        function initMap() {
+            // Center of New Zealand
+            const nzCenter = { lat: -41.5, lng: 172.5 };
+            
+            // Custom map style for dark forest theme
+            const mapStyles = [
+                {
+                    "elementType": "geometry",
+                    "stylers": [{ "color": "#1a2e1a" }]
+                },
+                {
+                    "elementType": "labels.text.stroke",
+                    "stylers": [{ "color": "#1a2e1a" }]
+                },
+                {
+                    "elementType": "labels.text.fill",
+                    "stylers": [{ "color": "#7ba37b" }]
+                },
+                {
+                    "featureType": "administrative",
+                    "elementType": "geometry.stroke",
+                    "stylers": [{ "color": "#4a7c4a" }]
+                },
+                {
+                    "featureType": "administrative.land_parcel",
+                    "elementType": "labels.text.fill",
+                    "stylers": [{ "color": "#5d8a5d" }]
+                },
+                {
+                    "featureType": "landscape.natural",
+                    "elementType": "geometry",
+                    "stylers": [{ "color": "#2d4a2d" }]
+                },
+                {
+                    "featureType": "poi",
+                    "elementType": "geometry",
+                    "stylers": [{ "color": "#2d4a2d" }]
+                },
+                {
+                    "featureType": "poi",
+                    "elementType": "labels.text.fill",
+                    "stylers": [{ "color": "#7ba37b" }]
+                },
+                {
+                    "featureType": "poi.park",
+                    "elementType": "geometry.fill",
+                    "stylers": [{ "color": "#1a2e1a" }]
+                },
+                {
+                    "featureType": "poi.park",
+                    "elementType": "labels.text.fill",
+                    "stylers": [{ "color": "#5d8a5d" }]
+                },
+                {
+                    "featureType": "road",
+                    "elementType": "geometry",
+                    "stylers": [{ "color": "#4a7c4a" }]
+                },
+                {
+                    "featureType": "road",
+                    "elementType": "geometry.stroke",
+                    "stylers": [{ "color": "#1a2e1a" }]
+                },
+                {
+                    "featureType": "road",
+                    "elementType": "labels.text.fill",
+                    "stylers": [{ "color": "#7ba37b" }]
+                },
+                {
+                    "featureType": "road.highway",
+                    "elementType": "geometry",
+                    "stylers": [{ "color": "#5d8a5d" }]
+                },
+                {
+                    "featureType": "road.highway",
+                    "elementType": "geometry.stroke",
+                    "stylers": [{ "color": "#1a2e1a" }]
+                },
+                {
+                    "featureType": "transit",
+                    "elementType": "geometry",
+                    "stylers": [{ "color": "#2d4a2d" }]
+                },
+                {
+                    "featureType": "water",
+                    "elementType": "geometry",
+                    "stylers": [{ "color": "#0e1f0e" }]
+                },
+                {
+                    "featureType": "water",
+                    "elementType": "labels.text.fill",
+                    "stylers": [{ "color": "#4a7c4a" }]
+                }
+            ];
+
+            const map = new google.maps.Map(document.getElementById('google-map'), {
+                zoom: 5,
+                center: nzCenter,
+                styles: mapStyles,
+                mapTypeControl: false,
+                streetViewControl: false,
+                fullscreenControl: true,
+                zoomControl: true,
+                gestureHandling: 'cooperative'
+            });
+
+            // Great Walks track data with accurate GPS coordinates
+            // Coordinates are for the main trailhead or central point of each track
+            const tracks = [
+                {
+                    name: "Routeburn Track",
+                    distance: "32 km",
+                    status: "completed",
+                    // Routeburn Shelter trailhead, near Glenorchy
+                    lat: -44.7354,
+                    lng: 168.1846
+                },
+                {
+                    name: "Rakiura Track",
+                    distance: "32 km",
+                    status: "completed",
+                    // Oban, Stewart Island - track start
+                    lat: -46.8997,
+                    lng: 168.1269
+                },
+                {
+                    name: "Tongariro Northern Circuit",
+                    distance: "43 km",
+                    status: "completed",
+                    // Whakapapa Village, main trailhead
+                    lat: -39.1979,
+                    lng: 175.5422
+                },
+                {
+                    name: "Abel Tasman Coast Track",
+                    distance: "60 km",
+                    status: "completed",
+                    // Marahau, southern trailhead
+                    lat: -40.9786,
+                    lng: 173.0058
+                },
+                {
+                    name: "Lake Waikaremoana Track",
+                    distance: "46 km",
+                    status: "completed",
+                    // Lake Waikaremoana, Te Urewera
+                    lat: -38.7397,
+                    lng: 177.0608
+                },
+                {
+                    name: "Heaphy Track",
+                    distance: "78.4 km",
+                    status: "completed",
+                    // Brown Hut end, Kahurangi National Park
+                    lat: -40.9167,
+                    lng: 172.5500
+                },
+                {
+                    name: "Paparoa Track",
+                    distance: "55 km",
+                    status: "completed",
+                    // Blackball, northern trailhead
+                    lat: -42.3661,
+                    lng: 171.4078
+                },
+                {
+                    name: "Milford Track",
+                    distance: "53.5 km",
+                    status: "completed",
+                    // Glade Wharf, start of track on Lake Te Anau
+                    lat: -45.1265,
+                    lng: 167.7433
+                },
+                {
+                    name: "Kepler Track",
+                    distance: "60 km",
+                    status: "completed",
+                    // Kepler Track carpark, Te Anau
+                    lat: -45.4359,
+                    lng: 167.7106
+                },
+                {
+                    name: "Hump Ridge Track",
+                    distance: "61 km",
+                    status: "upcoming",
+                    // Rarakau carpark, Tuatapere
+                    lat: -46.1322,
+                    lng: 167.4578
+                }
+            ];
+
+            // Create markers for each track
+            tracks.forEach(track => {
+                // Custom marker colors
+                const pinColor = track.status === 'completed' ? '#5d8a5d' : '#f0c987';
+                const pinBorder = track.status === 'completed' ? '#7ba37b' : '#e8956a';
+                
+                // Create custom SVG marker
+                const markerIcon = {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    fillColor: pinColor,
+                    fillOpacity: 1,
+                    strokeColor: pinBorder,
+                    strokeWeight: 3,
+                    scale: 10
+                };
+
+                const marker = new google.maps.Marker({
+                    position: { lat: track.lat, lng: track.lng },
+                    map: map,
+                    title: track.name,
+                    icon: markerIcon,
+                    animation: track.status === 'upcoming' ? google.maps.Animation.BOUNCE : null
+                });
+
+                // Create info window content
+                const statusClass = track.status === 'upcoming' ? 'upcoming' : '';
+                const statusText = track.status === 'upcoming' ? '⭐ NEXT UP!' : '✓ Completed';
+                
+                const infoContent = `
+                    <div class="info-window">
+                        <div class="info-window-title">${track.name}</div>
+                        <div class="info-window-distance">${track.distance}</div>
+                        <div class="info-window-status ${statusClass}">${statusText}</div>
+                    </div>
+                `;
+
+                const infoWindow = new google.maps.InfoWindow({
+                    content: infoContent
+                });
+
+                // Show info window on hover
+                marker.addListener('mouseover', () => {
+                    infoWindow.open(map, marker);
+                });
+
+                marker.addListener('mouseout', () => {
+                    infoWindow.close();
+                });
+
+                // Also open on click for mobile
+                marker.addListener('click', () => {
+                    infoWindow.open(map, marker);
+                });
+            });
+
+            // Fit map to show all markers
+            const bounds = new google.maps.LatLngBounds();
+            tracks.forEach(track => {
+                bounds.extend({ lat: track.lat, lng: track.lng });
+            });
+            map.fitBounds(bounds, { padding: 50 });
+        }
+
+        // Load Google Maps when the page loads
+        window.initMap = initMap;
+    </script>
+
+    <!-- Google Maps JavaScript API -->
+    <!-- NOTE: For full functionality, add your Google Maps API key below -->
+    <!-- Get a free API key at: https://developers.google.com/maps/documentation/javascript/get-api-key -->
+    <!-- Replace YOUR_API_KEY with your actual key -->
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap&loading=async"
+        onerror="handleMapError()">
+    </script>
+    
+    <script>
+        // Fallback if Google Maps fails to load
+        function handleMapError() {
+            const mapContainer = document.getElementById('google-map');
+            if (mapContainer) {
+                mapContainer.innerHTML = `
+                    <div style="
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        height: 100%;
+                        background: #2d4a2d;
+                        color: #7ba37b;
+                        text-align: center;
+                        padding: 2rem;
+                        border-radius: 12px;
+                    ">
+                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#5d8a5d" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        <h3 style="color: #f0c987; margin: 1rem 0 0.5rem; font-family: 'Cormorant Garamond', serif;">Map Loading...</h3>
+                        <p style="font-size: 0.9rem; max-width: 400px;">
+                            To display the interactive Google Map, add your API key to the script tag in index.html.
+                            <br><br>
+                            <a href="https://developers.google.com/maps/documentation/javascript/get-api-key" 
+                               target="_blank" 
+                               style="color: #d4a574; text-decoration: underline;">
+                                Get a free Google Maps API key →
+                            </a>
+                        </p>
+                    </div>
+                `;
+            }
+        }
     </script>
 </body>
 </html>
