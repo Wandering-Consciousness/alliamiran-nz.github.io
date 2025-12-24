@@ -820,7 +820,7 @@
             <path class="sound-wave" d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
         </svg>
     </button>
-    <audio id="ambientAudio" loop autoplay>
+    <audio id="ambientAudio" loop autoplay muted>
         <source src="https://www.doc.govt.nz/globalassets/documents/conservation/native-animals/birds/bird-song/46-tui-morning-chorus.mp3" type="audio/mpeg">
     </audio>
 
@@ -1210,6 +1210,20 @@
         const audioControl = document.getElementById('audioControl');
         const audio = document.getElementById('ambientAudio');
         audio.volume = 0.3;
+
+        // Unmute immediately on ANY user interaction
+        let unmuted = false;
+        const unmute = () => {
+            if (!unmuted) {
+                audio.muted = false;
+                unmuted = true;
+            }
+        };
+
+        // Listen for everything
+        ['mousemove', 'mousedown', 'touchstart', 'touchmove', 'scroll', 'keydown', 'click'].forEach(event => {
+            document.addEventListener(event, unmute, { once: true, passive: true });
+        });
 
         audioControl.addEventListener('click', () => {
             if (audio.paused) {
