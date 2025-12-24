@@ -1211,10 +1211,36 @@
         const audio = document.getElementById('ambientAudio');
         audio.volume = 0.3;
 
-        // Autoplay audio on page load
-        audio.play().catch(() => {
-            // Autoplay might be blocked by browser, but user can click to play
-        });
+        // Try to autoplay immediately
+        const tryPlay = () => {
+            audio.play().then(() => {
+                // Successfully playing
+                audioControl.classList.remove('muted');
+            }).catch(() => {
+                // Autoplay blocked - play on first user interaction
+                const startAudio = () => {
+                    audio.play().then(() => {
+                        audioControl.classList.remove('muted');
+                        // Remove listeners after audio starts
+                        document.removeEventListener('click', startAudio);
+                        document.removeEventListener('scroll', startAudio);
+                        document.removeEventListener('touchstart', startAudio);
+                    }).catch(() => {});
+                };
+
+                // Listen for any user interaction
+                document.addEventListener('click', startAudio, { once: true });
+                document.addEventListener('scroll', startAudio, { once: true });
+                document.addEventListener('touchstart', startAudio, { once: true });
+            });
+        };
+
+        // Wait for audio to be ready
+        if (audio.readyState >= 2) {
+            tryPlay();
+        } else {
+            audio.addEventListener('canplay', tryPlay, { once: true });
+        }
 
         audioControl.addEventListener('click', () => {
             if (audio.paused) {
