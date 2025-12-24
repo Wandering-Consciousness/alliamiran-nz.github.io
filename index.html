@@ -813,7 +813,7 @@
     <div class="topo-bg"></div>
 
     <!-- Audio Control -->
-    <button class="audio-control muted" id="audioControl" aria-label="Toggle sound">
+    <button class="audio-control" id="audioControl" aria-label="Toggle sound">
         <svg viewBox="0 0 24 24">
             <path d="M3 9v6h4l5 5V4L7 9H3z"/>
             <path class="sound-wave" d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
@@ -821,7 +821,7 @@
         </svg>
     </button>
     <audio id="ambientAudio" loop>
-        <source src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Tui_song.ogg" type="audio/ogg">
+        <source src="https://www.doc.govt.nz/globalassets/documents/conservation/native-animals/birds/bird-song/46-tui-morning-chorus.mp3" type="audio/mpeg">
     </audio>
 
     <!-- Hero Section -->
@@ -1210,6 +1210,12 @@
         const audioControl = document.getElementById('audioControl');
         const audio = document.getElementById('ambientAudio');
         audio.volume = 0.3;
+
+        // Autoplay audio on page load
+        audio.play().catch(() => {
+            // If autoplay is blocked, keep the muted class so user can click to play
+            audioControl.classList.add('muted');
+        });
 
         audioControl.addEventListener('click', () => {
             if (audio.paused) {
