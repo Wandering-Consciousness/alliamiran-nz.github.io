@@ -1211,10 +1211,10 @@
         const audio = document.getElementById('ambientAudio');
         audio.volume = 0.3;
 
-        // Unmute audio after it starts (starts muted to bypass autoplay restrictions)
-        setTimeout(() => {
+        // Unmute once audio actually starts playing
+        audio.addEventListener('playing', () => {
             audio.muted = false;
-        }, 100);
+        }, { once: true });
 
         audioControl.addEventListener('click', () => {
             if (audio.paused) {
