@@ -1211,10 +1211,19 @@
         const audio = document.getElementById('ambientAudio');
         audio.volume = 0.3;
 
-        // Unmute once audio actually starts playing
-        audio.addEventListener('playing', () => {
-            audio.muted = false;
-        }, { once: true });
+        // Unmute immediately on ANY user interaction
+        let unmuted = false;
+        const unmute = () => {
+            if (!unmuted) {
+                audio.muted = false;
+                unmuted = true;
+            }
+        };
+
+        // Listen for everything
+        ['mousemove', 'mousedown', 'touchstart', 'touchmove', 'scroll', 'keydown', 'click'].forEach(event => {
+            document.addEventListener(event, unmute, { once: true, passive: true });
+        });
 
         audioControl.addEventListener('click', () => {
             if (audio.paused) {
