@@ -1211,10 +1211,16 @@
         const audio = document.getElementById('ambientAudio');
         audio.volume = 0.3;
 
-        // Unmute once audio actually starts playing
-        audio.addEventListener('playing', () => {
+        // Unmute on first user interaction
+        const unmute = () => {
             audio.muted = false;
-        }, { once: true });
+        };
+
+        document.addEventListener('scroll', unmute, { once: true });
+        document.addEventListener('click', unmute, { once: true });
+        document.addEventListener('keydown', unmute, { once: true });
+        document.addEventListener('touchstart', unmute, { once: true });
+        document.addEventListener('mousemove', unmute, { once: true });
 
         audioControl.addEventListener('click', () => {
             if (audio.paused) {
