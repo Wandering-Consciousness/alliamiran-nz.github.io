@@ -820,7 +820,7 @@
             <path class="sound-wave" d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
         </svg>
     </button>
-    <audio id="ambientAudio" loop autoplay>
+    <audio id="ambientAudio" loop autoplay muted>
         <source src="https://www.doc.govt.nz/globalassets/documents/conservation/native-animals/birds/bird-song/46-tui-morning-chorus.mp3" type="audio/mpeg">
     </audio>
 
@@ -1211,36 +1211,10 @@
         const audio = document.getElementById('ambientAudio');
         audio.volume = 0.3;
 
-        // Try to autoplay immediately
-        const tryPlay = () => {
-            audio.play().then(() => {
-                // Successfully playing
-                audioControl.classList.remove('muted');
-            }).catch(() => {
-                // Autoplay blocked - play on first user interaction
-                const startAudio = () => {
-                    audio.play().then(() => {
-                        audioControl.classList.remove('muted');
-                        // Remove listeners after audio starts
-                        document.removeEventListener('click', startAudio);
-                        document.removeEventListener('scroll', startAudio);
-                        document.removeEventListener('touchstart', startAudio);
-                    }).catch(() => {});
-                };
-
-                // Listen for any user interaction
-                document.addEventListener('click', startAudio, { once: true });
-                document.addEventListener('scroll', startAudio, { once: true });
-                document.addEventListener('touchstart', startAudio, { once: true });
-            });
-        };
-
-        // Wait for audio to be ready
-        if (audio.readyState >= 2) {
-            tryPlay();
-        } else {
-            audio.addEventListener('canplay', tryPlay, { once: true });
-        }
+        // Unmute audio after it starts (starts muted to bypass autoplay restrictions)
+        setTimeout(() => {
+            audio.muted = false;
+        }, 100);
 
         audioControl.addEventListener('click', () => {
             if (audio.paused) {
