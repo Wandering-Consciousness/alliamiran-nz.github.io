@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hump Ridge Track — All I Am, I Ran</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --forest-deep: #1a2e1a;
+            --forest-mid: #2d4a2d;
+            --forest-light: #4a7c4a;
+            --fern: #5d8a5d;
+            --moss: #7ba37b;
+            --mist: #c5d5c5;
+            --cream: #f5f2eb;
+            --sunrise-orange: #e8956a;
+            --sunset-gold: #d4a574;
+            --moonrise: #f0c987;
+            --white-glow: rgba(255, 255, 255, 0.9);
+            --text-dark: #1a2e1a;
+            --text-light: #f5f2eb;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Instrument Sans', sans-serif;
+            background: var(--forest-deep);
+            color: var(--text-light);
+            overflow-x: hidden;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Topographic background pattern */
+        .topo-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.08;
+            z-index: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 800'%3E%3Cg fill='none' stroke='%234a7c4a' stroke-width='1'%3E%3Cellipse cx='400' cy='400' rx='350' ry='300'/%3E%3Cellipse cx='400' cy='400' rx='300' ry='250'/%3E%3Cellipse cx='400' cy='400' rx='250' ry='200'/%3E%3Cellipse cx='400' cy='400' rx='200' ry='150'/%3E%3Cellipse cx='400' cy='400' rx='150' ry='100'/%3E%3Cellipse cx='400' cy='400' rx='100' ry='60'/%3E%3Cellipse cx='400' cy='400' rx='50' ry='30'/%3E%3Cellipse cx='200' cy='200' rx='150' ry='120'/%3E%3Cellipse cx='200' cy='200' rx='100' ry='80'/%3E%3Cellipse cx='200' cy='200' rx='50' ry='40'/%3E%3Cellipse cx='600' cy='600' rx='180' ry='140'/%3E%3Cellipse cx='600' cy='600' rx='130' ry='100'/%3E%3Cellipse cx='600' cy='600' rx='80' ry='60'/%3E%3Cellipse cx='650' cy='200' rx='120' ry='100'/%3E%3Cellipse cx='650' cy='200' rx='70' ry='55'/%3E%3Cellipse cx='150' cy='600' rx='130' ry='110'/%3E%3Cellipse cx='150' cy='600' rx='80' ry='65'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: 800px 800px;
+        }
+
+        /* Navigation */
+        .back-nav {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: rgba(45, 74, 45, 0.9);
+            border: 1px solid var(--fern);
+            border-radius: 30px;
+            color: var(--cream);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-link:hover {
+            background: var(--fern);
+            transform: translateX(-5px);
+        }
+
+        .back-link svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            fill: none;
+        }
+
+        /* Main Content */
+        .poem-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .poem-container {
+            max-width: 700px;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Final badge */
+        .final-badge {
+            display: inline-block;
+            padding: 8px 24px;
+            background: linear-gradient(135deg, var(--sunrise-orange), var(--moonrise));
+            color: var(--forest-deep);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            border-radius: 30px;
+            margin-bottom: 2rem;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        .track-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-weight: 400;
+            color: var(--cream);
+            margin-bottom: 0.5rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.3s;
+        }
+
+        .track-subtitle {
+            font-family: 'Instrument Sans', sans-serif;
+            font-size: 1rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--moss);
+            margin-bottom: 0.5rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.5s;
+        }
+
+        .track-details {
+            font-family: 'Instrument Sans', sans-serif;
+            font-size: 0.9rem;
+            color: var(--sunset-gold);
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.7s;
+        }
+
+        .track-details span {
+            margin: 0 8px;
+        }
+
+        /* Poem Section */
+        .poem {
+            background: rgba(45, 74, 45, 0.3);
+            border: 1px solid rgba(125, 163, 125, 0.3);
+            border-radius: 16px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.9s;
+        }
+
+        .poem::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--sunrise-orange), var(--moonrise), var(--fern));
+        }
+
+        .poem-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.3rem, 4vw, 1.8rem);
+            font-style: italic;
+            line-height: 2;
+            color: var(--moonrise);
+        }
+
+        .poem-line {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .poem-author {
+            font-family: 'Instrument Sans', sans-serif;
+            font-size: 0.9rem;
+            font-style: normal;
+            color: var(--moss);
+            margin-top: 2rem;
+            letter-spacing: 0.1em;
+        }
+
+        /* Stats */
+        .track-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 1.1s;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--moonrise);
+            display: block;
+        }
+
+        .stat-value .unit {
+            font-size: 1.2rem;
+            color: var(--sunset-gold);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--moss);
+        }
+
+        /* Completion celebration */
+        .completion-message {
+            background: linear-gradient(135deg, rgba(232, 149, 106, 0.2), rgba(240, 201, 135, 0.2));
+            border: 2px solid var(--moonrise);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 1.3s;
+        }
+
+        .completion-message h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            color: var(--moonrise);
+            margin-bottom: 0.5rem;
+        }
+
+        .completion-message p {
+            color: var(--cream);
+            font-size: 1.1rem;
+        }
+
+        .completion-message .checkmark {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        .poem-footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(125, 163, 125, 0.2);
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 1.5s;
+        }
+
+        .footer-haiku {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            font-style: italic;
+            color: var(--moss);
+            line-height: 2;
+        }
+
+        .footer-year {
+            color: rgba(125, 163, 125, 0.5);
+            font-size: 0.85rem;
+            margin-top: 1rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(232, 149, 106, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(232, 149, 106, 0.8); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .poem-page {
+                padding: 5rem 1.5rem 3rem;
+            }
+
+            .poem {
+                padding: 2rem;
+            }
+
+            .track-stats {
+                gap: 2rem;
+            }
+
+            .back-nav {
+                top: 15px;
+                left: 15px;
+            }
+
+            .back-link {
+                padding: 10px 16px;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="topo-bg"></div>
+
+    <!-- Back Navigation -->
+    <nav class="back-nav">
+        <a href="../index.html" class="back-link">
+            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Back to Journey
+        </a>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="poem-page">
+        <div class="poem-container">
+            <span class="final-badge">🎊 The Final Chapter 🎊</span>
+            
+            <h1 class="track-title">Hump Ridge Track</h1>
+            <p class="track-subtitle">Fiordland, Southland</p>
+            <p class="track-details">
+                <span>61 km</span> • <span>3 Days</span> • <span>31 December 2025</span>
+            </p>
+
+            <!-- Kat's Poem -->
+            <div class="poem">
+                <div class="poem-text">
+                    <span class="poem-line">Pink on ocean; rising sun.</span>
+                    <span class="poem-line">Happy year end everyone.</span>
+                    <span class="poem-line">Hump Ridge, run.</span>
+                    <span class="poem-line">Great Year, done.</span>
+                    <span class="poem-line">Adventures though; just begun.</span>
+                </div>
+                <p class="poem-author">— Kat, 31 December 2025</p>
+            </div>
+
+            <!-- Track Stats -->
+            <div class="track-stats">
+                <div class="stat">
+                    <span class="stat-value">61<span class="unit">km</span></span>
+                    <span class="stat-label">Distance</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value">10<span class="unit">th</span></span>
+                    <span class="stat-label">Great Walk</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value">NYE<span class="unit"> '25</span></span>
+                    <span class="stat-label">Completed</span>
+                </div>
+            </div>
+
+            <!-- Completion Celebration -->
+            <div class="completion-message">
+                <div class="checkmark">✓</div>
+                <h3>All 10 Great Walks Complete!</h3>
+                <p>Completed with Mum (Janice) & Dad (Bryan) — the perfect finale to an incredible year.</p>
+            </div>
+
+            <!-- Footer -->
+            <footer class="poem-footer">
+                <div class="footer-haiku">
+                    Pink sunrise, year's end—<br>
+                    ten walks done, the ridge now crossed:<br>
+                    great year done. Begin.
+                </div>
+                <p class="footer-year">Kat's Great Walks 2025 — ALL COMPLETE! 🎉</p>
+            </footer>
+        </div>
+    </main>
+</body>
+</html>
