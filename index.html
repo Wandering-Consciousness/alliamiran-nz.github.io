@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All I Am, I Ran — Kat's 2025 Great Walks</title>
+    <title>All I Am, I Ran — Kat's Great Walks 2025 ✓ Complete!</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -179,6 +179,238 @@
         .haiku-line:nth-child(1) { animation: fadeInUp 1s ease forwards 1.5s; }
         .haiku-line:nth-child(2) { animation: fadeInUp 1s ease forwards 2s; }
         .haiku-line:nth-child(3) { animation: fadeInUp 1s ease forwards 2.5s; }
+
+        /* New completion haiku */
+        .haiku-new {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.1rem, 3vw, 1.6rem);
+            font-style: italic;
+            line-height: 2;
+            color: var(--sunrise-orange);
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(240, 201, 135, 0.3);
+        }
+
+        .haiku-line-new {
+            display: block;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .haiku-line-new:nth-child(1) { animation: fadeInUp 1s ease forwards 3s; }
+        .haiku-line-new:nth-child(2) { animation: fadeInUp 1s ease forwards 3.5s; }
+        .haiku-line-new:nth-child(3) { animation: fadeInUp 1s ease forwards 4s; }
+
+        /* Strikethrough styling */
+        s {
+            text-decoration: line-through;
+            opacity: 0.6;
+            color: var(--moss);
+        }
+
+        /* Completion glow effect on stat cards */
+        .stat-card.complete-glow {
+            border-color: var(--moonrise);
+            box-shadow: 0 0 20px rgba(240, 201, 135, 0.2);
+        }
+
+        .stat-card.complete-glow::before {
+            background: linear-gradient(90deg, var(--fern), var(--moonrise), var(--sunrise-orange));
+        }
+
+        /* Final track item styling */
+        .track-item.completed-final {
+            border-left-color: var(--moonrise);
+            background: linear-gradient(90deg, rgba(240, 201, 135, 0.15), rgba(232, 149, 106, 0.1));
+            animation: celebratePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes celebratePulse {
+            0%, 100% { box-shadow: 0 0 5px rgba(240, 201, 135, 0.3); }
+            50% { box-shadow: 0 0 20px rgba(240, 201, 135, 0.5); }
+        }
+
+        /* Completion Celebration Section */
+        .completion-celebration {
+            padding: 6rem 2rem;
+            background: linear-gradient(180deg, var(--forest-mid) 0%, var(--forest-deep) 50%, var(--forest-mid) 100%);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .completion-celebration::before {
+            content: '🎉';
+            position: absolute;
+            top: 20px;
+            left: 10%;
+            font-size: 3rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .completion-celebration::after {
+            content: '🎊';
+            position: absolute;
+            top: 20px;
+            right: 10%;
+            font-size: 3rem;
+            animation: float 3s ease-in-out infinite 0.5s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .completion-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--moonrise), var(--sunrise-orange));
+            color: var(--forest-deep);
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+            animation: celebratePulse 2s ease-in-out infinite;
+        }
+
+        .completion-celebration h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: var(--moonrise);
+            margin-bottom: 0.5rem;
+        }
+
+        .completion-subtitle {
+            color: var(--moss);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .completion-poem {
+            max-width: 500px;
+            margin: 0 auto 2rem;
+            padding: 2rem;
+            background: rgba(26, 46, 26, 0.5);
+            border: 1px solid var(--fern);
+            border-radius: 12px;
+        }
+
+        .poem-line {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-style: italic;
+            color: var(--cream);
+            line-height: 1.8;
+        }
+
+        .poem-author {
+            color: var(--sunset-gold);
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            font-style: normal;
+        }
+
+        .final-km {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 5rem;
+            color: var(--moonrise);
+            line-height: 1;
+            margin: 1rem 0;
+        }
+
+        .final-km span {
+            font-size: 2rem;
+            color: var(--sunset-gold);
+        }
+
+        .completion-message {
+            font-size: 1.3rem;
+            color: var(--fern);
+            font-weight: 500;
+        }
+
+        /* Hump Ridge Gallery */
+        .humpridge-gallery {
+            padding: 4rem 2rem;
+            background: var(--forest-deep);
+            position: relative;
+            z-index: 1;
+        }
+
+        .humpridge-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0.5rem;
+        }
+
+        .humpridge-grid .gallery-item {
+            aspect-ratio: 1;
+            overflow: hidden;
+            border-radius: 8px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .humpridge-grid .gallery-item::after {
+            content: '🏔️';
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            font-size: 1rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .humpridge-grid .gallery-item:hover::after {
+            opacity: 1;
+        }
+
+        .humpridge-grid .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .humpridge-grid .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 1024px) {
+            .humpridge-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .humpridge-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .humpridge-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Footer new poem */
+        .footer-poem-new {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            font-style: italic;
+            color: var(--sunrise-orange);
+            line-height: 1.8;
+            margin: 1.5rem 0;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(93, 138, 93, 0.3);
+        }
 
         .scroll-indicator {
             position: absolute;
@@ -831,12 +1063,17 @@
         </div>
         <div class="hero-overlay"></div>
         <div class="hero-content">
-            <p class="hero-subtitle">A Christmas Celebration of Kat's Trail Runs of NZ's Great Walks 2025</p>
+            <p class="hero-subtitle"><s>A Christmas Celebration of Kat's Trail Runs of NZ's Great Walks 2025</s><br>🎉 ALL 10 GREAT WALKS COMPLETE! Happy New Year 2026! 🎉</p>
             <h1 class="hero-title">All I Am, I Ran</h1>
             <div class="haiku">
                 <span class="haiku-line">Fern, moon, fractured bone—</span>
                 <span class="haiku-line">through mist and pain, I found this:</span>
                 <span class="haiku-line">all I am, I ran.</span>
+            </div>
+            <div class="haiku-new">
+                <span class="haiku-line-new">Pink sunrise, year's end—</span>
+                <span class="haiku-line-new">ten walks done, the ridge now crossed:</span>
+                <span class="haiku-line-new">great year done. Begin.</span>
             </div>
         </div>
         <div class="scroll-indicator">
@@ -849,21 +1086,21 @@
     <!-- Stats Section -->
     <section class="stats">
         <div class="stats-container">
-            <div class="stat-card">
-                <span class="stat-number" data-target="521"><span class="stat-unit">km</span></span>
+            <div class="stat-card complete-glow">
+                <span class="stat-number" data-target="582"><span class="stat-unit">km</span></span>
                 <span class="stat-label">Total Distance</span>
             </div>
-            <div class="stat-card">
+            <div class="stat-card complete-glow">
                 <span class="stat-number" data-target="10"></span>
                 <span class="stat-label">Great Walks</span>
             </div>
-            <div class="stat-card">
-                <span class="stat-number" data-target="9"></span>
-                <span class="stat-label">Completed</span>
+            <div class="stat-card complete-glow">
+                <span class="stat-number" data-target="10"></span>
+                <span class="stat-label"><s>9</s> → ALL Completed! ✓</span>
             </div>
-            <div class="stat-card">
-                <span class="stat-number" data-target="1"></span>
-                <span class="stat-label">To Go</span>
+            <div class="stat-card complete-glow">
+                <span class="stat-number" data-target="0"></span>
+                <span class="stat-label"><s>1 To Go</s> → DONE!</span>
             </div>
         </div>
     </section>
@@ -871,7 +1108,7 @@
     <!-- Map Section -->
     <section class="map-section">
         <h2 class="section-title">The Journey</h2>
-        <p class="section-subtitle">10 Great Walks across Aotearoa New Zealand</p>
+        <p class="section-subtitle">10 Great Walks across Aotearoa New Zealand — <strong>ALL COMPLETE!</strong> ✓</p>
         
         <div class="map-container">
             <div id="google-map"></div>
@@ -924,26 +1161,44 @@
                 <span class="track-distance">60 km</span>
                 <span class="track-status completed">✓ Completed</span>
             </div>
-            <div class="track-item upcoming">
-                <span class="track-name">Hump Ridge Track</span>
+            <div class="track-item completed-final">
+                <span class="track-name"><a href="poems/humpridge.html">Hump Ridge Track</a></span>
                 <span class="track-distance">61 km</span>
-                <span class="track-status upcoming">Coming Up!</span>
+                <span class="track-status completed">✓ THE FINAL ONE! 31 Dec 2025</span>
             </div>
         </div>
     </section>
 
-    <!-- One More Section -->
-    <section class="one-more">
-        <span class="one-more-badge">The Final Chapter</span>
-        <h2>One More To Go</h2>
-        <p>Hump Ridge Track awaits after Christmas</p>
-        <div class="remaining-km">61<span>km</span></div>
+    <!-- Completion Celebration Section -->
+    <section class="completion-celebration">
+        <span class="completion-badge">🎊 31 December 2025 🎊</span>
+        <h2>The Final Chapter: Complete!</h2>
+        <p class="completion-subtitle">Hump Ridge Track — with Mum (Janice) & Dad (Bryan)</p>
+        <div class="completion-poem">
+            <p class="poem-line">Pink on ocean; rising sun.</p>
+            <p class="poem-line">Happy year end everyone.</p>
+            <p class="poem-line">Hump Ridge, run.</p>
+            <p class="poem-line">Great Year, done.</p>
+            <p class="poem-line">Adventures though; just begun.</p>
+            <p class="poem-author">— Kat, 31 Dec 2025</p>
+        </div>
+        <div class="final-km">61<span>km</span></div>
+        <p class="completion-message">All I am, I ran. All 10. All done. ✓</p>
+    </section>
+
+    <!-- Hump Ridge Photo Gallery -->
+    <section class="humpridge-gallery">
+        <h2 class="section-title">🏔️ Hump Ridge Finale 🏔️</h2>
+        <p class="section-subtitle">The last 20 photos from the final Great Walk — NYE 2025</p>
+        <div class="humpridge-grid" id="humpridgeGrid">
+            <!-- Hump Ridge photos inserted by JavaScript -->
+        </div>
     </section>
 
     <!-- Gallery Section -->
     <section class="gallery">
         <h2 class="section-title">The Memories</h2>
-        <p class="section-subtitle">95 moments from an incredible year</p>
+        <p class="section-subtitle">115 moments from an incredible year (95 + 20 from Hump Ridge!)</p>
         <div class="gallery-grid" id="galleryGrid">
             <!-- Photos will be inserted by JavaScript -->
         </div>
@@ -980,7 +1235,8 @@
     <!-- Personal Message -->
     <section class="message">
         <div class="message-content">
-            <p>Merry Xmas sis! Awesome effort on the 2025 Great Walks and will join you on the 2026 Whanganui Great Kayak!</p>
+            <p><s>Merry Xmas sis!</s> Happy New Year 2026! 🎉</p>
+            <p>You did it — ALL 10 Great Walks complete! Awesome effort on the 2025 Great Walks and will join you on the 2026 Whanganui Great Kayak!</p>
             <div class="message-signature">— With love, Simon ❤️</div>
         </div>
     </section>
@@ -992,11 +1248,17 @@
             through mist and pain, I found this:<br>
             all I am, I ran.
         </div>
-        <p class="footer-year">Kat's Great Walks 2025</p>
+        <div class="footer-poem-new">
+            Pink on ocean; rising sun.<br>
+            Happy year end everyone.<br>
+            Hump Ridge, run. Great Year, done.<br>
+            Adventures though; just begun.
+        </div>
+        <p class="footer-year"><s>Kat's Great Walks 2025</s> → ALL COMPLETE! Welcome 2026! 🎉</p>
     </footer>
 
     <script>
-        // Photo filenames
+        // Photo filenames - Original 94 photos
         const photos = [
             "476499570_18158675953339526_5836040147480391696_n.jpg",
             "476499740_18158675896339526_1781293804063901959_n.jpg",
@@ -1093,29 +1355,88 @@
             "603376056_18190705138339526_235774792187175423_n.jpg"
         ];
 
-        // Shuffle photos for variety
+        // NEW: Hump Ridge photos from 31 Dec 2025 - THE FINAL WALK!
+        const humpRidgePhotos = [
+            "608324939_18191853772339526_7193201617230255158_n.jpg",
+            "608352533_18191853676339526_2350023334863806889_n.jpg",
+            "608406756_18191853799339526_5327916291029535664_n.jpg",
+            "608541500_18191853733339526_3528890273534263450_n.jpg",
+            "608689930_18191853637339526_2436200807213086478_n.jpg",
+            "608779093_18191853706339526_367689753515446777_n.jpg",
+            "608811180_18191853724339526_7875063811121225255_n.jpg",
+            "609024580_18191853601339526_5733830063303699209_n.jpg",
+            "609025206_18191853649339526_5896133345186063137_n.jpg",
+            "609036039_18191853619339526_7854740728997748562_n.jpg",
+            "609044604_18191853715339526_8785058970614344776_n.jpg",
+            "609153042_18191853592339526_2787019457699194334_n.jpg",
+            "609157426_18191853790339526_3179309145105117627_n.jpg",
+            "609361631_18191853664339526_1155697443524234158_n.jpg",
+            "609418738_18191853628339526_7792669293833628565_n.jpg",
+            "609456595_18191853610339526_4400713385150320893_n.jpg",
+            "609556472_18191853745339526_1989402890981858133_n.jpg",
+            "609641658_18191853763339526_2216240219493727428_n.jpg",
+            "609722888_18191853754339526_9011170715685611379_n.jpg",
+            "610158414_18191853781339526_3765165759488735299_n.jpg"
+        ];
+
+        // Combine all photos for the main gallery
+        const allPhotos = [...photos, ...humpRidgePhotos];
+
+        // Shuffle photos for variety (main gallery)
         const shuffledPhotos = photos.sort(() => Math.random() - 0.5);
 
-        // Populate gallery
+        // Populate main gallery
         const galleryGrid = document.getElementById('galleryGrid');
         shuffledPhotos.forEach((photo, index) => {
             const item = document.createElement('div');
             item.className = 'gallery-item';
             item.innerHTML = `<img src="photos/${photo}" alt="Great Walks memory ${index + 1}" loading="lazy">`;
             item.dataset.index = index;
+            item.dataset.gallery = 'main';
             galleryGrid.appendChild(item);
+        });
+
+        // Populate Hump Ridge gallery (in order - not shuffled)
+        const humpridgeGrid = document.getElementById('humpridgeGrid');
+        humpRidgePhotos.forEach((photo, index) => {
+            const item = document.createElement('div');
+            item.className = 'gallery-item';
+            item.innerHTML = `<img src="photos/${photo}" alt="Hump Ridge memory ${index + 1}" loading="lazy">`;
+            item.dataset.index = index;
+            item.dataset.gallery = 'humpridge';
+            humpridgeGrid.appendChild(item);
         });
 
         // Lightbox functionality
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = lightbox.querySelector('img');
         let currentIndex = 0;
+        let currentGallery = 'main';
 
+        // Function to get current photo array
+        function getCurrentPhotos() {
+            return currentGallery === 'humpridge' ? humpRidgePhotos : shuffledPhotos;
+        }
+
+        // Main gallery click handler
         galleryGrid.addEventListener('click', (e) => {
             const item = e.target.closest('.gallery-item');
             if (item) {
                 currentIndex = parseInt(item.dataset.index);
+                currentGallery = 'main';
                 lightboxImg.src = `photos/${shuffledPhotos[currentIndex]}`;
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        });
+
+        // Hump Ridge gallery click handler
+        humpridgeGrid.addEventListener('click', (e) => {
+            const item = e.target.closest('.gallery-item');
+            if (item) {
+                currentIndex = parseInt(item.dataset.index);
+                currentGallery = 'humpridge';
+                lightboxImg.src = `photos/${humpRidgePhotos[currentIndex]}`;
                 lightbox.classList.add('active');
                 document.body.style.overflow = 'hidden';
             }
@@ -1127,13 +1448,15 @@
         });
 
         lightbox.querySelector('.lightbox-prev').addEventListener('click', () => {
-            currentIndex = (currentIndex - 1 + shuffledPhotos.length) % shuffledPhotos.length;
-            lightboxImg.src = `photos/${shuffledPhotos[currentIndex]}`;
+            const photos = getCurrentPhotos();
+            currentIndex = (currentIndex - 1 + photos.length) % photos.length;
+            lightboxImg.src = `photos/${photos[currentIndex]}`;
         });
 
         lightbox.querySelector('.lightbox-next').addEventListener('click', () => {
-            currentIndex = (currentIndex + 1) % shuffledPhotos.length;
-            lightboxImg.src = `photos/${shuffledPhotos[currentIndex]}`;
+            const photos = getCurrentPhotos();
+            currentIndex = (currentIndex + 1) % photos.length;
+            lightboxImg.src = `photos/${photos[currentIndex]}`;
         });
 
         // Keyboard navigation
@@ -1436,8 +1759,8 @@
                 {
                     name: "Hump Ridge Track",
                     distance: "61 km",
-                    status: "upcoming",
-                    // Rarakau carpark, Tuatapere
+                    status: "completed",
+                    // Rarakau carpark, Tuatapere - THE FINAL ONE! 31 Dec 2025
                     lat: -46.1322,
                     lng: 167.4578
                 }
